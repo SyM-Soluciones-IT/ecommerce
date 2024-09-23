@@ -1,5 +1,5 @@
 const CartModel = require("../models/Cart");
-const CartItemModel = require("../models/CartItemModel");
+const CartItemModel = require("../models/CartItem");
 
 const getCarts = async (req, res) => {
   try {
@@ -29,7 +29,7 @@ const getCartById = async (req, res) => {
 const getCartItems = async (req, res) => {
   const { id } = req.params;
   try {
-    const items = await CartModel.getCartItems(id);
+    const items = await CartItemModel.getCartItems(id);
     if (!items || items.length === 0) {
       return res.status(404).json({ message: "No se encontraron items en el carrito" });
     }
@@ -42,7 +42,7 @@ const getCartItems = async (req, res) => {
 const addItemToCart = async (req, res) => {
   const { cartId, productId, quantity, price } = req.body;
   try {
-    const result = await CartModel.addItemToCart(cartId, productId, quantity, price);
+    const result = await CartItemModel.addItemToCart(cartId, productId, quantity, price);
     res.status(201).json({ id: result, message: "Item agregado al carrito correctamente" });
   } catch (error) {
     res.status(500).json({ error: "Error en la base de datos" });
@@ -52,7 +52,7 @@ const addItemToCart = async (req, res) => {
 const updateCartItem = async (req, res) => {
   const { cartId, itemId, quantity, price } = req.body;
   try {
-    const result = await CartModel.updateCartItem(cartId, itemId, quantity, price);
+    const result = await CartItemModel.updateCartItem(cartId, itemId, quantity, price);
     res.json({ message: "Item actualizado correctamente" });
   } catch (error) {
     res.status(500).json({ error: "Error en la base de datos" });
@@ -62,7 +62,7 @@ const updateCartItem = async (req, res) => {
 const deleteCartItem = async (req, res) => {
   const { cartId, itemId } = req.params;
   try {
-    const result = await CartModel.deleteCartItem(cartId, itemId);
+    const result = await CartItemModel.deleteCartItem(cartId, itemId);
     res.json({ message: "Item eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ error: "Error en la base de datos" });

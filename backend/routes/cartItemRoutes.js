@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const cartItemsController = require("../controllers/CartItemsController");
+const cartItemsController = require("../controllers/CartItemController");
 
 // Rutas para todos los usuarios (solo autenticación)
 router.get("/:cartId", cartItemsController.getCartItems);
