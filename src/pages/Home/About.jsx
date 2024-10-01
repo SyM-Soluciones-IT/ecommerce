@@ -1,53 +1,49 @@
 import React from "react";
-import SectionTitle from "../../components/SectionTitle";
-import { useSelector } from 'react-redux'
+import aro from "../../images/aro.jpg";
+import nubes from "../../images/nubes.jpg";
+import peces from "../../images/peces.jpg";
 
-function About() {
-  const {loading , portfolioData} = useSelector((state) => state.root)
-  const {about} = portfolioData;
-  const {skills, lottieUrl, description1, description2, description3} = about;
+function Products() {
+  const products = [
+    {
+      id: 1,
+      image: aro,
+      title: "Aro de Colores",
+      description: "Un aro con cintas de colores para la estimulación visual y motora.",
+      price: "$10.00",
+    },
+    {
+      id: 2,
+      image: nubes,
+      title: "Nubes Tejidas",
+      description: "Dos nubes tejidas a mano, ideales para decorar la habitación.",
+      price: "$15.00",
+    },
+    {
+      id: 3,
+      image: peces,
+      title: "Peces de Colores",
+      description: "Un juego de pesca con peces de tela, ideal para mejorar la coordinación.",
+      price: "$12.00",
+    },
+  ];
 
-  // Verifica si el idioma es español (ES)
-  const isSpanish = about.language === "ES";
   return (
-    <div>
-      <SectionTitle title={isSpanish ? "Acerca de mi" : "About Me"} />
-
-      <div className="flex w-full items-center sm:flex-col sm:text-center">
-        <div className="h-3/4 w-1/2 sm:w-full">
-          <dotlottie-player
-            src="https://lottie.host/46fdb34b-d21f-4507-a28a-1f312d8b5ac1/gM84Hs56aG.json"
-            background="transparent"
-            speed="1"
-            autoplay
-          ></dotlottie-player>
+    <div className="grid grid-cols-3 sm:grid-cols-1 gap-6 p-5">
+      <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Nuestros Productos</h1>
+      {products.map((product) => (
+        <div key={product.id} className="border border-quaternary rounded-lg p-4 text-center flex flex-col items-center">
+          <img src={product.image} alt={product.title} className="w-80 h-48 object-cover mb-4" />
+          <h3 className="text-lg font-semibold">{product.title}</h3>
+          <p className="text-gray-600">{product.description}</p>
+          <p className="text-xl font-bold my-2">{product.price}</p>
+          <button className="bg-tertiary text-white py-2 px-4 rounded hover:bg-quaternary hover:text-600">
+            Agregar al carrito
+          </button>
         </div>
-        <div className="flex flex-col gap-5 w-1/2 sm:w-full">
-          <p className="text-white">
-            {description1 || ''}
-          </p>
-
-          <p className="text-white">{description2 || ''}</p>
-          <p className="text-white">
-            {description3 || ''}
-          </p>
-        </div>
-      </div>
-
-      <div className="py-5">
-        <h1 className="text-tertiary text-xl text-center">
-          {isSpanish ? "Estas son algunas de las tecnologías que he estado estudiando recientemente" : "Here are a few technologies I've been working with recently:"}
-        </h1>
-        <div className="flex flex-wrap gap-10 mt-5 justify-center">
-          {skills.map((skill) => (
-            <div className="border border-tertiary py-3 px-5">
-              <h1 className="text-tertiary">{skill}</h1>
-            </div>
-          ))}
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
 
-export default About;
+export default Products;

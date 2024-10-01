@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import spainFlag from '../images/spain.jpg';
-import ukFlag from '../images/uk.jpg';
+import { Link } from 'react-router-dom'; // Asegúrate de tener react-router-dom instalado
+import abejitaLogo  from '../images/abejita-logo.png';
 
 function Header() {
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'EN');
@@ -12,23 +12,21 @@ function Header() {
   };
 
   return (
-    <div className='p-5 bg-primary flex justify-between items-center sticky top-0 w-full z-[100]'>
-      <h1 className='text-secondary text-4xl font-semibold mr-4'>P</h1>
+    <div className='p-5 bg-secondary flex justify-between items-center sticky top-0 w-full z-[100]'>
       <div className='flex items-center'>
-        <img 
-          src={spainFlag} 
-          alt='Spanish Flag' 
-          className={`cursor-pointer w-8 h-8 mx-2 ${language === 'ES' ? 'opacity-100' : 'opacity-50'}`} 
-          onClick={() => changeLanguage('ES')} 
-        />
-        <img 
-          src={ukFlag} 
-          alt='UK Flag' 
-          className={`cursor-pointer w-8 h-8 mx-2 ${language === 'EN' ? 'opacity-100' : 'opacity-50'}`} 
-          onClick={() => changeLanguage('EN')} 
-        />
+        <img src={abejitaLogo} alt="Logo de Abejita" width={100}/>
       </div>
-      <h1 className='text-tertiary text-4xl font-semibold'>M</h1>
+      
+      <nav className='flex space-x-4'>
+        <Link to="/" className='text-tertiary text-xl hover:text-quaternary'>Inicio</Link>
+        <Link to="/productos" className='text-tertiary text-xl hover:text-quaternary'>Productos</Link>
+        <Link to="/sobre-nosotros" className='text-tertiary text-xl hover:text-quaternary'>Sobre Nosotros</Link>
+        <Link to="/contacto" className='text-tertiary text-xl hover:text-quaternary'>Contacto</Link>
+      </nav>
+
+      <div className='flex items-center'>
+        <img src={abejitaLogo} alt="Logo de Abejita" width={100}/>
+      </div>
     </div>
   );
 }

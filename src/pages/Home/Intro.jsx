@@ -1,26 +1,37 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import peces from "../../images/peces.jpg";
+import nubes from "../../images/nubes.jpg";
+import aro from "../../images/aro.jpg";
+import portaChupetes from "../../images/porta-chupetes.jpg";
 
 function Intro() {
-  const {loading , portfolioData} = useSelector((state) => state.root)
-  const {intro} = portfolioData;
-  const {firstName, lastName, welcomeText, image, description, caption} = intro;
-  
+  const images = [peces, nubes, aro, portaChupetes];
+
   return (
-    <div className="h-4/5 bg-primary flex flex-col items-center gap-8 py-10">
-      <h1 className="text-white">{welcomeText || ''}</h1>
-      <div className="flex flex-col items-center gap-8">
-        <div className="flex gap-5 sm:gap-3">
-          <h1 className="text-7xl sm:text-4xl text-secondary font-semibold">{lastName || ''}</h1>
-          <h1 className="text-7xl sm:text-4xl text-tertiary font-semibold">{firstName || ''}</h1>
-        </div>
-        <div className="flex justify-center w-fit">
-          <img src={image} alt="Profile Image" className="w-1/3"/>
-        </div>
+    <div className="flex justify-center items-center py-10 bg-secondary">
+      <div style={{ width: '80%', maxWidth: '1200px', margin: 'auto' }}>
+        {/* Carrusel de imágenes */}
+        <Carousel
+          showArrows={true}
+          showThumbs={false}
+          infiniteLoop={true}
+          autoPlay={true}
+          interval={3000}
+          className="mx-auto" // Centrado del carrusel
+        >
+          {images.map((img, index) => (
+            <div key={index} style={{ height: '400px' }}> {/* Establecer la altura */}
+              <img
+                src={img}
+                alt={`Carousel Image ${index + 1}`}
+                className="w-full h-full object-cover" // Ajustar la imagen al contenedor
+              />
+            </div>
+          ))}
+        </Carousel>
       </div>
-      <p className="text-white text-center w-2/3 sm:w-full">
-        {description || ''}
-      </p>
     </div>
   );
 }
