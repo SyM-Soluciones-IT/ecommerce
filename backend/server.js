@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/database');
+const cors = require('cors');
 const cartRoutes = require('./routes/cartRoutes');
 const cartItemRoutes = require('./routes/cartItemRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -12,6 +13,7 @@ const orderRoutes = require('./routes/orderRoutes');
 
 
 const app = express();
+app.use(cors()); // Habilitar CORS para todas las rutas
 app.use(express.json()); // Permite leer los datos enviados en formato JSON
 
 // Conectar a la base de datos

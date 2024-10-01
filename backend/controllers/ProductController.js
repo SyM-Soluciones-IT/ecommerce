@@ -6,11 +6,12 @@ const getProducts = async (req, res) => {
     if (!products || products.length === 0) {
       return res.status(404).json({ message: "No se encontraron productos" });
     }
-    res.json(products);
+    res.json(products);  // Ahora los productos incluyen imágenes
   } catch (error) {
     res.status(500).json({ error: "Error en la base de datos" });
   }
 };
+
 
 const getProductById = async (req, res) => {
   const { id } = req.params;

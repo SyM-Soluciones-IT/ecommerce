@@ -5,8 +5,20 @@ const ProductModel = {
   async getProducts() {
     try {
       const pool = await db();
-      const [rows] = await pool.query("SELECT * FROM products");
-      return rows;
+      const [rows] = await pool.query(`
+        SELECT p.id, p.name, p.description, p.price, pi.image 
+        FROM products p 
+        JOIN product_images pi ON p.id = pi.product_id 
+        WHERE pi.visible = 1;
+      `);
+
+      // Convertir el BLOB a base64
+      const productsWithImages = rows.map((product) => ({
+        ...product,
+        image: product.image ? product.image.toString('base64') : null, // Convertir el BLOB a base64
+      }));
+
+      return productsWithImages;
     } catch (err) {
       console.error("Error ejecutando la consulta:", err);
       throw err;
