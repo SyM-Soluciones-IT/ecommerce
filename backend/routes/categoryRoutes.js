@@ -9,7 +9,7 @@ router.get('/', categoryController.getCategories);
 // Rutas accesibles por administradores (autenticación + admin)
 router.put('/:id', authMiddleware(true), categoryController.updateCategory);
 router.delete('/:id', authMiddleware(true), categoryController.deleteCategoryById);
-router.post('/save', authMiddleware(true), categoryController.saveCategory);
+router.post('/create', authMiddleware(true), categoryController.createCategory);
 
 module.exports = router;
 

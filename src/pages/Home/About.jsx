@@ -1,41 +1,45 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 
-function Products() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/products"); // Llamada al endpoint que devuelve los productos
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error al obtener los productos:", error);
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  function handleClick(productName) {
-    window.open(`https://wa.me/+5492915090223/?text=Hola me interesa el producto ${productName}`, '_blank');
-  }
-
+function AboutUs() {
   return (
-    <div className="grid grid-cols-3 sm:flex sm:flex-col gap-6 p-5">
-      <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Nuestros Productos</h1>
-      {products.map((product) => (
-        <div key={product.id} className="border border-quaternary rounded-lg p-4 text-center flex flex-col items-center justify-between">
-          <img src={`data:image/jpeg;base64,${product.image}`} alt={product.name} className="w-80 h-80 object-cover mb-4" />
-          <h3 className="text-lg font-semibold">{product.name}</h3>
-          <p className="text-gray-600">{product.description}</p>
-          <p className="text-xl font-bold my-2">${product.price}</p>
-          <button className="bg-tertiary text-white py-2 px-4 rounded hover:bg-quaternary hover:text-600" onClick={() => handleClick(product.name)}>
-            Contactar por WhatsApp
-          </button>
-        </div>
-      ))}
+    <div className="flex flex-col items-center justify-center py-10">
+      {/* Título de la sección con el mismo estilo que "Experiences" */}
+      <div className="bg-tertiary text-white p-6 rounded-lg w-full flex items-center justify-center">
+        <h1 className="text-3xl font-bold">Sobre Nosotros</h1>
+      </div>
+
+      {/* Descripción de la empresa */}
+      <div className="  p-6 rounded-lg w-full flex items-center justify-center mt-6">
+        <p className="text-lg text-center">
+          Bienvenidos a nuestra tienda, donde nos especializamos en ofrecer
+          artículos de la más alta calidad para bebés. Nuestra misión es
+          brindar a los padres los mejores productos para el cuidado y el
+          bienestar de sus pequeños.
+          <br />
+          <br />
+          Creemos que cada bebé merece lo mejor, por eso seleccionamos con
+          cuidado cada artículo que ofrecemos. Desde ropa suave y cómoda hasta
+          juguetes seguros y educativos, aquí encontrarás todo lo que necesitas
+          para hacer la vida de tu bebé más feliz.
+          <br />
+          <br />
+          Nuestro equipo está formado por padres apasionados que entienden las
+          necesidades de las familias modernas. Estamos comprometidos a
+          proporcionar un servicio excepcional y a ayudarte a encontrar los
+          productos perfectos para tu pequeño.
+        </p>
+      </div>
+
+      {/* Imagen representativa */}
+      <div className="mt-6 w-full flex items-center justify-center">
+        <img
+          src="https://via.placeholder.com/800x400.png?text=Imagen+de+Art%C3%ADculos+para+Beb%C3%A9s"
+          alt="Artículos para bebés"
+          className="w-2/3 sm:w-full object-cover rounded-lg"
+        />
+      </div>
     </div>
   );
 }
 
-export default Products;
+export default AboutUs;

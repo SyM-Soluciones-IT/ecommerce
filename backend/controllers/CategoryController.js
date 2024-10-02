@@ -24,7 +24,7 @@ const getCategories = async (req, res) => {
   }
 };
 
-const saveCategory = async (req, res) => {
+const createCategory = async (req, res) => {
   const { name, description } = req.body;
 
   try {
@@ -76,4 +76,4 @@ const deleteCategoryById = async (req, res) => {
   }
 };
 
-module.exports = { getCategoryById, getCategories, saveCategory, updateCategory, deleteCategoryById };
+module.exports = { getCategoryById, getCategories, createCategory, updateCategory, deleteCategoryById };
