@@ -16,17 +16,21 @@ function Products() {
     fetchProducts();
   }, []);
 
+  function handleClick(productName) {
+    window.open(`https://wa.me/+5492915090223/?text=Hola me interesa el producto ${productName}`, '_blank');
+  }
+
   return (
     <div className="grid grid-cols-3 sm:flex sm:flex-col gap-6 p-5">
       <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Nuestros Productos</h1>
       {products.map((product) => (
-        <div key={product.id} className="border border-quaternary rounded-lg p-4 text-center flex flex-col items-center">
+        <div key={product.id} className="border border-quaternary rounded-lg p-4 text-center flex flex-col items-center justify-between">
           <img src={`data:image/jpeg;base64,${product.image}`} alt={product.name} className="w-80 h-80 object-cover mb-4" />
           <h3 className="text-lg font-semibold">{product.name}</h3>
           <p className="text-gray-600">{product.description}</p>
           <p className="text-xl font-bold my-2">${product.price}</p>
-          <button className="bg-tertiary text-white py-2 px-4 rounded hover:bg-quaternary hover:text-600">
-            Agregar al carrito
+          <button className="bg-tertiary text-white py-2 px-4 rounded hover:bg-quaternary hover:text-600" onClick={() => handleClick(product.name)}>
+            Contactar por WhatsApp
           </button>
         </div>
       ))}

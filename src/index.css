@@ -34,25 +34,6 @@ i:hover{
 
 /* loader animation */
 
-.p{
-  animation: p 1s infinite;
-}
-
-@keyframes p {
-  0% {
-    opacity: 0.25;
-  }
-  33% {
-    opacity: 0.5;
-  }
-  66% {
-    opacity: 0.75;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .m{
   animation: m 1s infinite;
 }
