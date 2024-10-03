@@ -1,42 +1,53 @@
-import React from "react";
-import nosotros from "../../images/nosotros.jpg";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function AboutUs() {
+  const [aboutData, setAboutData] = useState(null); // Estado para almacenar la información de About
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/about/get-about");
+        setAboutData(response.data.data); // Asegúrate de acceder a la propiedad correcta
+      } catch (error) {
+        console.error("Error al obtener la información de About", error);
+      }
+    };
+
+    fetchAboutData();
+  }, []);
+
+  if (!aboutData) {
+    return <div>Cargando...</div>; // Puedes mostrar un loader o un mensaje mientras se cargan los datos
+  }
+
   return (
     <div className="flex flex-col items-center justify-center py-10">
-      {/* Título de la sección con el mismo estilo que "Experiences" */}
+      {/* Título de la sección */}
       <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Sobre Nosotros</h1>
 
       {/* Descripción de la empresa */}
-      <div className="  p-6 rounded-lg w-full flex items-center justify-center mt-6">
+      <div className="p-6 rounded-lg w-full flex items-center justify-center mt-6">
         <p className="text-lg text-center">
-          Bienvenidos a nuestra tienda, donde nos especializamos en ofrecer
-          artículos de la más alta calidad para bebés. Nuestra misión es
-          brindar a los padres los mejores productos para el cuidado y el
-          bienestar de sus pequeños.
+          {aboutData.description1}
           <br />
           <br />
-          Creemos que cada bebé merece lo mejor, por eso seleccionamos con
-          cuidado cada artículo que ofrecemos. Desde ropa suave y cómoda hasta
-          juguetes seguros y educativos, aquí encontrarás todo lo que necesitas
-          para hacer la vida de tu bebé más feliz.
+          {aboutData.description2}
           <br />
           <br />
-          Nuestro equipo está formado por padres apasionados que entienden las
-          necesidades de las familias modernas. Estamos comprometidos a
-          proporcionar un servicio excepcional y a ayudarte a encontrar los
-          productos perfectos para tu pequeño.
+          {aboutData.description3}
         </p>
       </div>
 
       {/* Imagen representativa */}
       <div className="mt-6 w-full flex items-center justify-center">
-        <img
-          src={nosotros}
+        <img 
+          src={`data:image/jpeg;base64,${aboutData.image}`} 
           alt="Artículos para bebés"
-          className="w-2/3 sm:w-full object-cover rounded-lg"
+          className="w-1/4 sm:w-1/8 object-cover rounded-lg" // Ajustado aquí
         />
-      </div>
+    </div>
+
     </div>
   );
 }
