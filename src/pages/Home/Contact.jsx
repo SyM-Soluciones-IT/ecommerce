@@ -1,64 +1,38 @@
 import React from "react";
 import SectionTitle from "../../components/SectionTitle";
-import { useSelector } from "react-redux";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"; // Importar íconos
+import { InstagramEmbed } from "react-social-media-embed";
 
 function Contact() {
-  const { portfolioData } = useSelector((state) => state.root);
-  const { contact } = portfolioData;
-
-  // Verifica si el idioma es español (ES)
-  const isSpanish = contact.language === "ES";
-
   return (
     <div className="p-5">
-      <SectionTitle title={isSpanish ? "Contáctanos" : "Contact Us"} />
+      <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">
+        Nuestro Instagram
+      </h1>
 
-      <div className="flex sm:flex-col justify-center gap-10">
-        <div className="flex flex-col w-1/3">
-          <h2 className="text-tertiary text-lg font-bold mb-4">
-            {isSpanish ? "Información de Contacto" : "Contact Information"}
-          </h2>
-          <p className="text-tertiary text-sm">{`${contact.name}`}</p>
-          <p className="text-tertiary text-sm">{`${contact.email}`}</p>
-          <p className="text-tertiary text-sm">{`${contact.mobile}`}</p>
-        </div>
+      <div className="flex sm:flex-col justify-around gap-10">
 
-        <div className="w-1/3">
-          <h2 className="text-tertiary text-lg font-bold mb-4">
-            {isSpanish ? "Redes Sociales" : "Social Media"}
-          </h2>
-          <div className="flex flex-col gap-2">
-            <a
-              href="https://www.facebook.com/tu-perfil"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-tertiary text-sm hover:text-quaternary"
-            >
-              Facebook
-            </a>
-            <a
-              href="https://www.instagram.com/tu-perfil"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-tertiary text-sm hover:text-quaternary"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.twitter.com/tu-perfil"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-tertiary text-sm hover:text-quaternary"
-            >
-              Twitter
-            </a>
-          </div>
-        </div>
+              {/* Tarjeta Instagram */}
+              <div className="flex justify-center">
+                <InstagramEmbed
+                  url="https://www.instagram.com/p/DAl0dBtxAVP/"
+                  width={550}
+                />
+              </div>
+
+              {/* Tarjeta de Instagram*/}
+              <div className="flex justify-center">
+                <InstagramEmbed
+                  url="https://www.instagram.com/p/DAldIRAJmJS/"
+                  width={550}
+                />
+              </div>
+            
       </div>
 
       {/* Mapa de Bahía Blanca */}
       <div className="flex justify-center mt-10">
-        <h2 className="text-tertiary text-lg font-bold mb-4">{isSpanish ? "Ubicación" : "Location"}</h2>
+        <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Ubicación</h1>
       </div>
       <div className="w-full h-[400px]">
         <iframe

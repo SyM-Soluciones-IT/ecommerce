@@ -48,11 +48,9 @@ function Experiences() {
   return (
     <div className="flex flex-col items-center justify-center py-10">
       {/* Sección de envíos */}
-      <div className="bg-tertiary text-white p-6 rounded-lg w-full flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Envios a todo el país</h1>
-      </div>
+      <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Envios a todo el país</h1>
 
-      <div className="mt-6 w-full flex items-center justify-center">
+      <div className="mt-6 w-full flex items-center justify-center mb-6">
         <img 
           src="https://via.placeholder.com/800x400.png?text=Imagen+de+Env%C3%ADos" 
           alt="Banner de envíos" 
@@ -60,11 +58,10 @@ function Experiences() {
         />
       </div>
 
+
       {/* Sección de comentarios */}
-      <div className="mt-10 w-full flex flex-col items-center justify-center">
-        <div className="bg-tertiary text-white p-6 rounded-lg w-full flex items-center justify-center mb-4">
-          <h2 className="text-3xl font-bold">Experiencias de Nuestros Clientes</h2>
-        </div>
+      <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3 mt-6">Experiencias de Nuestros Clientes</h1>
+      <div className="mt-10 w-full grid grid-cols-3 sm:flex sm:flex-col items-center justify-center">
         {comments.map((comment, index) => (
           <div
             key={index}

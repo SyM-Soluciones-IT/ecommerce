@@ -4,10 +4,8 @@ import Intro from "./Intro";
 import Products from "./Products";
 import Experiences from "./Experiences";
 import About from "./About";
-import Courses from "./Courses";
 import Contact from "./Contact";
 import Footer from "../../components/Footer";
-import LeftSider from "../../components/LeftSider";
 import { useSelector } from "react-redux";
 
 function Home() {
@@ -38,7 +36,6 @@ function Home() {
             <Contact />
           </div>
           <Footer />
-          <LeftSider />
         </div>
       )}
     </div>

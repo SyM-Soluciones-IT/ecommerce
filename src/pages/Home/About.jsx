@@ -1,12 +1,11 @@
 import React from "react";
+import nosotros from "../../images/nosotros.jpg";
 
 function AboutUs() {
   return (
     <div className="flex flex-col items-center justify-center py-10">
       {/* Título de la sección con el mismo estilo que "Experiences" */}
-      <div className="bg-tertiary text-white p-6 rounded-lg w-full flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Sobre Nosotros</h1>
-      </div>
+      <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Sobre Nosotros</h1>
 
       {/* Descripción de la empresa */}
       <div className="  p-6 rounded-lg w-full flex items-center justify-center mt-6">
@@ -33,7 +32,7 @@ function AboutUs() {
       {/* Imagen representativa */}
       <div className="mt-6 w-full flex items-center justify-center">
         <img
-          src="https://via.placeholder.com/800x400.png?text=Imagen+de+Art%C3%ADculos+para+Beb%C3%A9s"
+          src={nosotros}
           alt="Artículos para bebés"
           className="w-2/3 sm:w-full object-cover rounded-lg"
         />
