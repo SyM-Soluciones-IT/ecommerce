@@ -1,51 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, message, Spin } from "antd"; // Importa Spin para el loading
+import { Form, Input, message, Spin } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/rootSlice";
-import { fetchAboutData } from "../../redux/aboutActions"; // Asegúrate que esta es la ruta correcta
+import { fetchAboutData } from "../../redux/aboutActions";
 import axios from "axios";
 
 function AdminAbout() {
   const dispatch = useDispatch();
   const { aboutData } = useSelector((state) => state.root);
   const [imageFile, setImageFile] = useState(null);
-  const [loading, setLoading] = useState(true); // Estado de carga
+  const [loading, setLoading] = useState(true);
 
-  // Cargar los datos de About al montar el componente
   useEffect(() => {
     const loadAboutData = async () => {
       await dispatch(fetchAboutData());
-      setLoading(false); // Termina la carga
+      setLoading(false);
     };
     loadAboutData();
   }, [dispatch]);
 
-  // Manejo de error si aboutData no está disponible
   if (loading) {
-    return <Spin size="large" />; // Mostrar un spinner mientras carga
+    return <Spin size="large" />;
   }
 
-  // Verificar si aboutData contiene datos válidos
   if (!aboutData || !aboutData.success || !aboutData.data) {
-    return <div>Error al cargar datos.</div>; // Manejo de error si no hay datos
+    return <div>Error al cargar datos.</div>;
   }
-
 
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
 
-      // Crear FormData para enviar el archivo de imagen y otros datos
       const formData = new FormData();
       formData.append("description1", values.description1);
       formData.append("description2", values.description2);
       formData.append("description3", values.description3);
-      formData.append("image", imageFile); // Añadir el archivo de imagen al FormData
-      formData.append("_id", aboutData.data.id); // Incluye el ID de los datos actuales de About
-
+      formData.append("image", imageFile);
+      formData.append("id", aboutData.data.id);
+      
       const response = await axios.put(
-        "http://localhost:5000/api/about/update-about", 
+        "http://localhost:5000/api/about/update-about",
         formData,
         {
           headers: {
@@ -66,7 +61,6 @@ function AdminAbout() {
     }
   };
 
-  // Función para manejar el cambio del input de la imagen
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {

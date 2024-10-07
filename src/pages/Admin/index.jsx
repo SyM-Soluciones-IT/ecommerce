@@ -24,10 +24,10 @@ function Admin() {
       <Header />
       <div className="flex items-center justify-between border-b border-gray-500 mx-5">
         <div>
-          <h1 className="text-2xl py-2 text-primary">Portfolio Admin</h1>
+          <h1 className="text-2xl py-2 text-tertiary">Abejita Admin</h1>
         </div>
         <h1
-          className="underline text-primary text-xl cursor-pointer"
+          className="underline text-tertiary text-xl cursor-pointer"
           onClick={() => {
             localStorage.clear()
             window.location.href = "/admin-login"

@@ -1,73 +1,70 @@
-import React from "react";
-import { Form, Input, Select, message } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import { useDispatch, useSelector } from "react-redux";
-import { HideLoading, ShowLoading } from "../../redux/rootSlice";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function AdminContact() {
-  const dispatch = useDispatch();
-  const { portfolioData } = useSelector((state) => state.root);
+  const [contact, setContact] = useState({
+    instagram1: '',
+    instagram2: '',
+    google_map_url: ''
+  });
 
-  const onFinish = async (values) => {
+  // Cargar los datos de contacto actuales
+  useEffect(() => {
+    const fetchContact = async () => {
+      const response = await axios.get('http://localhost:5000/api/contact/get-contact');
+      setContact(response.data.data); // Ajustar la respuesta para obtener el objeto correcto
+    };
+    fetchContact();
+  }, []);
+
+  // Manejar el cambio de los inputs
+  const handleChange = (e) => {
+    setContact({ ...contact, [e.target.name]: e.target.value });
+  };
+
+  // Enviar el formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      dispatch(ShowLoading());
-      const response = await axios.post("https://peniamatias.alwaysdata.net/api/portfolio/update-contact", {
-        ...values,
-        _id: portfolioData.contact._id,
-      });
-      dispatch(HideLoading());
-      if (response.data.success) {
-        message.success(response.data.message);
-      } else {
-        message.error(response.data.message);
-      }
+      await axios.put('http://localhost:5000/api/contact/update-contact', { ...contact, id: 1 }); // Asignar ID 1
+      alert('Información de contacto actualizada con éxito');
     } catch (error) {
-      dispatch(HideLoading());
-      message.error(response.data.message);
+      console.error('Error actualizando el contacto', error);
     }
   };
 
   return (
     <div>
-      <Form
-        onFinish={onFinish}
-        layout="vertical"
-        initialValues={portfolioData.contact}
-      >
-        <Form.Item name="name" label="Name">
-          <Input placeholder="Name" />
-        </Form.Item>
-        <Form.Item name="age" label="Age">
-          <Input placeholder="Age" />
-        </Form.Item>
-        <Form.Item name="gender" label="Gender">
-          <Input placeholder="Gender" />
-        </Form.Item>
-        <Form.Item name="email" label="Email">
-          <Input placeholder="Email" />
-        </Form.Item>
-        <Form.Item name="mobile" label="Mobile">
-          <Input placeholder="Mobile" />
-        </Form.Item>
-        <Form.Item name="country" label="Country">
-          <Input placeholder="Country" />
-        </Form.Item>
-        <Form.Item name="city" label="City">
-          <Input placeholder="City" />
-        </Form.Item>
-        <Form.Item name="language" label="Language">
-          <Select placeholder="Language" >
-            <Select.Option value="EN">English</Select.Option>
-            <Select.Option value="ES">Spanish</Select.Option>
-          </Select>
-        </Form.Item>
-        <div className="flex justify-end">
-          <button className="px-10 py-2 bg-primary text-white" type="submit">
-            Save
-          </button>
-        </div>
-      </Form>
+      <h2>Administrar Información de Contacto</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Instagram 1:</label>
+        <input
+          type="text"
+          name="instagram1"
+          value={contact.instagram1}
+          onChange={handleChange}
+        />
+        <label>Instagram 2:</label>
+        <input
+          type="text"
+          name="instagram2"
+          value={contact.instagram2}
+          onChange={handleChange}
+        />
+        <label>Google Map URL:</label>
+        <input
+          type="text"
+          name="google_map_url"
+          value={contact.google_map_url}
+          onChange={handleChange}
+        />
+        <button
+          className="px-10 py-2 bg-blue-500 text-white border border-blue-700 rounded"
+          type="submit"
+        >
+          Guardar
+        </button>
+      </form>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const connectDB = async () => {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       waitForConnections: true,
-      connectionLimit: 10,
+      connectionLimit: 30,
       queueLimit: 0
     });
     console.log('Conexión exitosa a la base de datos con pool');

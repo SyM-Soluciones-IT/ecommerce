@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/database'); // Asegúrate de que la ruta sea correcta
+const db = require('../config/database');
 const upload = require('../config/multer');
 
 // Consultas SQL como constantes
@@ -11,22 +11,17 @@ const SELECT_ABOUT_QUERY = 'SELECT * FROM about WHERE id = ?';
 router.put('/update-about', upload.single('image'), async (req, res) => {
     const pool = await db();
     try {
-        const { description1, description2, description3, id, image } = req.body; // Obtén el ID del cuerpo de la solicitud
-        // const image = req.image ? req.image.buffer : null; // Obtén el buffer de la imagen
+        const { description1, description2, description3, id } = req.body;
+        const image = req.file ? req.file.buffer : null; // Obtener el buffer de la imagen
 
         // Validación de entrada
         if (!description1 || !description2 || !description3 || !id) {
             return res.status(400).json({ success: false, message: 'Faltan campos requeridos.' });
         }
 
-        console.log(image);
-
-        // Actualiza los datos en la base de datos
+        // Actualizar los datos en la base de datos
         const [results] = await pool.query(UPDATE_ABOUT_QUERY, [description1, description2, description3, image, id]);
 
-        console.log(results);
-        
-        // Chequea cuántas filas se han afectado
         if (results.affectedRows === 0) {
             return res.status(404).json({ success: false, message: 'No se encontró información para actualizar con el ID proporcionado.' });
         }
@@ -50,7 +45,7 @@ router.get('/get-about', async (req, res) => {
 
         // Convertir la imagen de Buffer a Base64
         if (results[0].image) {
-            results[0].image = results[0].image.toString('base64'); // Asegúrate de que esto esté funcionando
+            results[0].image = results[0].image.toString('base64');
         }
 
         return res.json({ success: true, data: results[0] });

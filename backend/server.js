@@ -13,6 +13,8 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const ShipmentRoutes = require('./routes/shipmentsRoutes');
 const aboutRoute = require('./routes/aboutRoute');
+const contactRoute = require('./routes/contactRoute');
+const experiencesRoute = require('./routes/experiencesRoute');
 
 
 const app = express();
@@ -37,6 +39,8 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/shipments', ShipmentRoutes);
 app.use('/api/about', aboutRoute);
+app.use('/api/contact', contactRoute);
+app.use('/api/experiences', experiencesRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

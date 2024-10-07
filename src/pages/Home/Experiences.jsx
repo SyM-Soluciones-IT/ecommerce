@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 // Componente para mostrar estrellas
 const StarRating = ({ rating }) => {
@@ -22,32 +23,38 @@ const StarRating = ({ rating }) => {
 };
 
 function Experiences() {
-  const comments = [
-    {
-      name: "Juan Pérez",
-      rating: 5,
-      comment: "¡Excelente servicio! Los envíos son rápidos y seguros.",
-    },
-    {
-      name: "María García",
-      rating: 5,
-      comment: "Estoy muy satisfecha con la atención y la rapidez de los envíos. ¡Recomiendo totalmente!",
-    },
-    {
-      name: "Luis Fernández",
-      rating: 5,
-      comment: "Un servicio de 10. Los productos llegaron en perfectas condiciones y a tiempo.",
-    },
-    {
-      name: "Ana López",
-      rating: 5,
-      comment: "Me encantó la experiencia de compra. Sin duda, volveré a comprar aquí.",
-    },
-  ];
+  const [comments, setComments] = useState([]); // Inicializa comments como un arreglo vacío
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga
+  const [error, setError] = useState(null); // Estado para manejar errores
+
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      setLoading(true); // Inicia la carga
+      try {
+        const response = await axios.get('http://localhost:5000/api/experiences/get-experiences');
+        // Asegúrate de que la respuesta tenga el formato correcto
+        if (Array.isArray(response.data)) {
+          setComments(response.data); // Establece comentarios directamente desde response.data
+        } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
+          setComments(response.data.data); // Establece comentarios desde response.data.data
+        } else {
+          throw new Error("La estructura de datos no es un arreglo");
+        }
+      } catch (error) {
+        setError('Error al cargar las experiencias');
+        console.error(error);
+      } finally {
+        setLoading(false); // Termina la carga
+      }
+    };
+    fetchExperiences();
+  }, []);
+  
+  if (loading) return <p>Cargando experiencias...</p>; // Mensaje de carga
+  if (error) return <p>{error}</p>; // Mensaje de error
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
-      {/* Sección de envíos */}
       <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3">Envios a todo el país</h1>
 
       <div className="mt-6 w-full flex items-center justify-center mb-6">
@@ -58,20 +65,22 @@ function Experiences() {
         />
       </div>
 
-
-      {/* Sección de comentarios */}
       <h1 className="text-3xl text-quaternary text-center font-bold mb-4 col-span-3 mt-6">Experiencias de Nuestros Clientes</h1>
       <div className="mt-10 w-full grid grid-cols-3 sm:flex sm:flex-col items-center justify-center">
-        {comments.map((comment, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-lg rounded-lg p-4 w-full max-w-md mb-4"
-          >
-            <h3 className="text-lg font-semibold">{comment.name}</h3>
-            <StarRating rating={comment.rating} />
-            <p className="text-gray-700">{comment.comment}</p>
-          </div>
-        ))}
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <div
+              key={comment.id} // Asegúrate de que `comment.id` sea único
+              className="bg-white shadow-lg rounded-lg p-4 w-full max-w-md mb-4"
+            >
+              <h3 className="text-lg font-semibold">{comment.name}</h3>
+              <StarRating rating={comment.rating} />
+              <p className="text-gray-700">{comment.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p>No hay experiencias disponibles.</p> // Mensaje si no hay comentarios
+        )}
       </div>
     </div>
   );
